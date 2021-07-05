@@ -29,3 +29,12 @@ class Categorie(db.Model):
     heure_hebdo = db.Column(db.Integer, nullable=False)
     salaire_hebdo = db.Column(db.Numeric(15,3), nullable=False)
     liste_jour = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"{self.nom}"
+
+class Config(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    cle = db.Column(db.String(20), unique=True, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    valeur = db.Column(db.Numeric(16,3), nullable=False)

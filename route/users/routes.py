@@ -34,3 +34,23 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+@users.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(matricule=form.matricule.data,
+                    nom=form.nom.data,
+                    prenom=form.prenom.data,
+                    date_naissance=form.date_naissance.data,
+                    date_embauche=form.date_embauche.data,
+                    date_fin_contrat=form.date_fin_contrat.data,
+                    type_user=form.type_user.data,
+                    idcategorie=form.idcategorie.data.id,
+                    password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {form.nom.data}', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('register.html', title='Register', form=form)
