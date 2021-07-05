@@ -24,11 +24,13 @@ def create_app(config_class=Config):
     from route.users.routes import users
     from route.main.routes import main
     from route.categorie.routes import categorie
+    from route.pointage.routes import pointage
     from route.errors.handlers import errors
 
     app.register_blueprint(users)
     app.register_blueprint(main)
     app.register_blueprint(categorie)
+    app.register_blueprint(pointage)
     app.register_blueprint(errors)
 
     return app

@@ -50,3 +50,12 @@ def updateCat(cat_id):
         form.salaire_hebdo.data = cat.salaire_hebdo
         form.liste_jour.data = cat.liste_jour
     return render_template('categorie_form.html', title='Update employe', form=form, legend='Update employe')
+
+@categorie.route('/categorie/<int:cat_id>/delete', methods=['GET', 'POST'])
+@login_required
+def deleteCat(cat_id):
+    cat = Categorie.query.get_or_404(cat_id)
+    db.session.delete(cat)
+    db.session.commit()
+    flash('Your categorie has been deleted!', 'success')
+    return redirect(url_for('categorie.cat'))

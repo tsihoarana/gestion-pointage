@@ -23,6 +23,7 @@
 		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
 		  url_for('users.user_update', iduser=user.id)-->
 		  <td><a class="btn btn-outline-success" href="{{url_for('categorie.updateCat', cat_id=cat.id)}}">Modifier</a></td>
+		  <td><a class="btn btn-outline-danger" href="{{url_for('categorie.deleteCat', cat_id=cat.id)}}">Supprimer</a></td>
 		  {% endif %}
 		</tr>
 		{% endfor %}

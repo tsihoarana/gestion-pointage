@@ -31,6 +31,7 @@
 		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
 		  url_for('users.user_update', iduser=user.id)-->
 		  <td><a class="btn btn-outline-success" href="{{url_for('users.updateUser', user_id=user.id)}}">Modifier</a></td>
+		  <td><a class="btn btn-outline-success" href="{{url_for('pointage.add_pointage', user_id=user.id)}}">Nouveau Pointage</a></td>
 		  {% endif %}
 		</tr>
 		{% endfor %}

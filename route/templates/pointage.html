@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Pointage</h1>
+	<form method="POST" action="{{url_for('pointage.insert_pointage')}}">
+		<table class="table">
+		  <tr>
+		    <th style="width:200px;"></th>
+		    {% for day in days %}
+		    <th>{{day}}</th>
+		    {% endfor %}
+		  </tr>
+		  <tr>
+		    <th>Ferie:</th>
+		    {% for day in days %}
+		    <td><input type="checkbox" id="scales" name="{{day}}_ferie"></td>
+		    {% endfor %}
+		  </tr>
+		  <tr>
+		    <th>Jour: (5h - 22h)</th>
+		    {% for day in days %}
+		    <td><input size="10" type="text" id="scales" name="{{day}}_jour" checked></td>
+		    {% endfor %}
+		  </tr>
+		  <tr>
+		    <th>Nuit: (0h - 5h / 22h - 0h)</th>
+		    {% for day in days %}
+		    <td><input size="10" type="text" id="scales" name="{{day}}_nuit" checked></td>
+		    {% endfor %}
+		  </tr>
+		</table>
+		<input type="submit" class="btn btn-outline-info" value="Valider">
+	</form>
+{% endblock content %}
