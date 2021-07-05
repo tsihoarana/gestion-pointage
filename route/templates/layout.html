@@ -43,13 +43,14 @@
 				</div>
 				{% endif %}
 
-				{% if current_user.is_authenticated and current_user.type == '0' %}
+				{% if current_user.is_authenticated and current_user.type_user == 1 %}
 	        		<div class="dropdown">
 						<a class="nav-item nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						Ajout
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<!-- <a class="dropdown-item" href="url_for('avion.new_avion')">Ajout Avion</a> -->
+							<a class="dropdown-item" href="{{url_for('users.register')}}">Ajout employe</a>
 						</div>
 					</div>
 				{% endif %}

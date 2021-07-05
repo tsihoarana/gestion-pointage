@@ -16,7 +16,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		{% for user in users %}
+		{% for user in users.items %}
 		<tr>
 		  <td>{{user.id}}</td>
 		  <td>{{user.matricule}}</td>
@@ -30,10 +30,22 @@
 		  {% if current_user.is_authenticated and current_user.type_user == 1 %}
 		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
 		  url_for('users.user_update', iduser=user.id)-->
-		  <td><a class="btn btn-outline-success" href="#">Modifier</a></td>
+		  <td><a class="btn btn-outline-success" href="{{url_for('users.updateUser', user_id=user.id)}}">Modifier</a></td>
 		  {% endif %}
 		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
+	{% for page_num in users.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			{% if users.page == page_num %}
+				<a class="btn btn-info mb-4" href="{{ url_for('users.user', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('users.user', page=page_num) }}">{{ page_num }}</a>
+
+			{% endif %}
+		{% else %}
+			...
+		{% endif %}
+	{% endfor %}
 {% endblock content %}
