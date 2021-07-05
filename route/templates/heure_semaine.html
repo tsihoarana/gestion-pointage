@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Heure</h1>
+
+	<p><b>Nom:</b> {{user.nom}}</p>
+	<p><b>Prenom:</b> {{user.prenom}}</p>
+	<p><b>Matricule:</b> {{user.matricule}}</p>
+	<p><b>Categorie:</b> {{user.cat.nom}}</p>
+	
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">Designation</th>
+		  <th scope="col">Total</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+		  <td>HM40</td>
+		  <td>2</td>
+		</tr>
+		</tbody>
+	</table>
+{% endblock content %}

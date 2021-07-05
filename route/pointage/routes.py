@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
-from route.models import Pointage, Detailpointage
+from route.models import Pointage, Detailpointage, User
 # from route.pointage.forms import CatForm
 from route import db
 from route.config import Default
@@ -16,7 +16,7 @@ def add_pointage():
     days = Default.DAYS
     return render_template('pointage.html', title='Listes categories', days=days)
 
-@pointage.route('/pointage/<int:user_id>', methods=['POST'])
+@pointage.route('/pointage/<int:user_id>')
 @login_required
 def insert_pointage(user_id):
     days = Default.DAYS
@@ -35,3 +35,9 @@ def insert_pointage(user_id):
             nuit[name] = request.form.get(key)
     services.insertdb_pointage(user_id, ferie, jour, nuit)
     return redirect(url_for('users.user'))
+
+@pointage.route('/pointage/<int:user_id>/calcul')
+@login_required
+def calcul_heure(user_id):
+    user = User.query.get_or_404(user_id)
+    return render_template('heure_semaine.html', title="Calcul heure", user=user)
