@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField, Decim
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, NumberRange
 from wtforms.widgets import html5 as h5widgets
-# from wtforms.fields import html5
+from wtforms.fields import html5
 from flask_login import current_user
 from route.models import User, Categorie
 
@@ -16,11 +16,11 @@ class RegistrationForm(FlaskForm):
                             validators=[DataRequired(), Length(min=2 , max=20)])
     prenom = StringField('Prenom', 
                             validators=[DataRequired(), Length(min=2 , max=20)])
-    date_naissance = StringField('Date Naissance', 
+    date_naissance = html5.DateField('Date Naissance', 
                             validators=[DataRequired()])
-    date_embauche = StringField('Date Embauche', 
+    date_embauche = html5.DateField('Date Embauche', 
                             validators=[DataRequired()])
-    date_fin_contrat = StringField('Date Fin Contrat', 
+    date_fin_contrat = html5.DateField('Date Fin Contrat', 
                             validators=[DataRequired()])
 
     type_user = SelectField('type', choices=[('1', 'Admin'), ('0', 'Normal')])
