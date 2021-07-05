@@ -44,6 +44,10 @@ class Pointage(db.Model):
     iduser = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Detailpointage(db.Model):
+    # __table_args__ = (
+    #     db.CheckConstraint('heure_jour >= 0'),
+    #     db.CheckConstraint('heure_nuit >= 0'),
+    # )
     id = db.Column(db.Integer, primary_key=True)
     idpointage = db.Column(db.Integer, db.ForeignKey('pointage.id'))
     jour = db.Column(db.String(20), nullable=False)
