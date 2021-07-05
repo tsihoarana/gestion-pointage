@@ -12,7 +12,7 @@
 		  <th scope="col">date_embauche</th>
 		  <th scope="col">date_fin_contrat</th>
 		  <th scope="col">type_user</th>
-		  <th scope="col">idcategorie</th>
+		  <th scope="col">Categorie</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -25,8 +25,8 @@
 		  <td>{{user.date_naissance}}</td>
 		  <td>{{user.date_embauche}}</td>
 		  <td>{{user.date_fin_contrat}}</td>
-		  <td>{{user.type_user}}</td>
-		  <td>{{user.idcategorie}}</td>
+		  <td>{{utils.type_user(user.type_user)}}</td>
+		  <td>{{user.cat.nom}}</td>
 		  {% if current_user.is_authenticated and current_user.type_user == 1 %}
 		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
 		  url_for('users.user_update', iduser=user.id)-->

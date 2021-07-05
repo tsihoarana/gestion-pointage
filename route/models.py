@@ -29,7 +29,7 @@ class Categorie(db.Model):
     heure_hebdo = db.Column(db.Integer, nullable=False)
     salaire_hebdo = db.Column(db.Numeric(15,3), nullable=False)
     liste_jour = db.Column(db.String(100), unique=True, nullable=False)
-
+    users = db.relationship('User', backref='cat', lazy=True)
     def __repr__(self):
         return f"{self.nom}"
 

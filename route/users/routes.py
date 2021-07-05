@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from route import db, bcrypt
 from route.models import User
 from route.users.forms import RegistrationForm, LoginForm
-from route.users.utils import save_picture
+import route.users.utils as utils
 
 users = Blueprint('users', __name__)
 
@@ -11,7 +11,7 @@ users = Blueprint('users', __name__)
 @users.route('/user')
 def user():
     users = User.query.all()
-    return render_template('user.html', title='Listes user', users=users)
+    return render_template('user.html', title='Listes user', users=users, utils=utils)
 
 
 @users.route('/login', methods=['GET', 'POST'])
