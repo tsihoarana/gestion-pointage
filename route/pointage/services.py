@@ -12,11 +12,8 @@ def insertdb_pointage(user, feries, jours, nuits):
 		print("last={}".format(last))
 		for day in Default.DAYS:
 			ferie = int(feries.get(day))
-			print("ferie={}".format(ferie))
 			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
-			print("jour={}".format(jour))
 			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
-			print("nuit={}".format(nuit))
 			details = Detailpointage(idpointage=int(last),
 									jour=day,
 									est_ferier=ferie,
