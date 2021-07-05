@@ -37,19 +37,7 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<!-- <a class="dropdown-item" href="url_for('avion.list_avion')">Avion</a> -->
-						{% if current_user.type == '0' %}
-						<a class="dropdown-item" href="{{ url_for('etatroute.etatroutes') }}">Etat route</a>
-						<a class="dropdown-item" href="{{ url_for('route.routes') }}">Routes</a>
-						<a class="dropdown-item" href="{{ url_for('route.routescomplet') }}">Routes et etats</a>
-						<a class="dropdown-item" href="{{ url_for('entretien.entretiens') }}">Entretien</a>
-						<a class="dropdown-item" href="{{ url_for('users.user') }}">Utilisateurs</a>
-						<a class="dropdown-item" href="{{ url_for('route.etat_global') }}">Etat global</a>
-						<a class="dropdown-item" href="{{ url_for('users.list_montant_actuel') }}">Liste montant actuel</a>
-						{% endif %}
-
-						{% if current_user.type == '1' %}
-						<a class="dropdown-item" href="{{ url_for('route.etat_global') }}">Etat global</a>
-						{% endif %}
+						<a class="dropdown-item" href="#">Employe</a>
 						
 					</div>
 				</div>
@@ -62,8 +50,6 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<!-- <a class="dropdown-item" href="url_for('avion.new_avion')">Ajout Avion</a> -->
-							<a class="dropdown-item" href="{{url_for('users.register')}}">Ajout utilisateur</a>
-							<a class="dropdown-item" href="{{url_for('route.add_route')}}">Ajout route</a>
 						</div>
 					</div>
 				{% endif %}

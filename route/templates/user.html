@@ -1,24 +1,36 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Listes des utilisateurs</h1>
+	<h1>Listes des employees</h1>
 	<table class="table">
 		<thead>
 		<tr>
 		  <th scope="col">#</th>
-		  <th scope="col">Username</th>
-		  <th scope="col">Privilege</th>
+		  <th scope="col">matricule</th>
+		  <th scope="col">nom</th>
+		  <th scope="col">prenom</th>
+		  <th scope="col">date_naissance</th>
+		  <th scope="col">date_embauche</th>
+		  <th scope="col">date_fin_contrat</th>
+		  <th scope="col">type_user</th>
+		  <th scope="col">idcategorie</th>
 		</tr>
 		</thead>
 		<tbody>
 		{% for user in users %}
 		<tr>
 		  <td>{{user.id}}</td>
-		  <td>{{user.username}}</td>
-		  <td>{{user.type}}</td>
+		  <td>{{user.matricule}}</td>
+		  <td>{{user.nom}}</td>
+		  <td>{{user.prenom}}</td>
+		  <td>{{user.date_naissance}}</td>
+		  <td>{{user.date_embauche}}</td>
+		  <td>{{user.date_fin_contrat}}</td>
+		  <td>{{user.type_user}}</td>
+		  <td>{{user.idcategorie}}</td>
 		  {% if current_user.is_authenticated and current_user.type== '0' %}
-		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) -->
-		  <td><a class="btn btn-outline-success" href="{{url_for('users.user_update', iduser=user.id)}}">Modifier</a></td>
-		  <td><a class="btn btn-outline-success" href="{{url_for('users.add_budget', user_id=user.id)}}">Budget</a></td>
+		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
+		  url_for('users.user_update', iduser=user.id)-->
+		  <td><a class="btn btn-outline-success" href="#">Modifier</a></td>
 		  {% endif %}
 		</tr>
 		{% endfor %}
