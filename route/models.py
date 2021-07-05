@@ -28,7 +28,7 @@ class Categorie(db.Model):
     nom = db.Column(db.String(20), unique=True, nullable=False)
     heure_hebdo = db.Column(db.Integer, nullable=False)
     salaire_hebdo = db.Column(db.Numeric(15,3), nullable=False)
-    liste_jour = db.Column(db.String(100), unique=True, nullable=False)
+    liste_jour = db.Column(db.String(100), nullable=False)
     users = db.relationship('User', backref='cat', lazy=True)
     def __repr__(self):
         return f"{self.nom}"
@@ -38,3 +38,15 @@ class Config(db.Model):
     cle = db.Column(db.String(20), unique=True, nullable=False)
     description = db.Column(db.Text, nullable=False)
     valeur = db.Column(db.Numeric(16,3), nullable=False)
+
+class Pointage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    iduser = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Detailpointage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    idpointage = db.Column(db.Integer, db.ForeignKey('pointage.id'))
+    jour = db.Column(db.String(20), nullable=False)
+    est_ferier = db.Column(db.Integer, nullable=False)
+    heure_jour = db.Column(db.Integer, nullable=False)
+    heure_nuit = db.Column(db.Integer, nullable=False)

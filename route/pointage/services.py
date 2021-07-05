@@ -1,0 +1,30 @@
+from route.models import Pointage, Detailpointage
+from route.config import Default
+from route import db
+from flask import abort
+from sqlalchemy import func
+
+def insertdb_pointage(user, feries, jours, nuits):
+	try:
+		pointage = Pointage(iduser=int(user))
+		db.session.add(pointage)
+		last = db.session.query(func.max(Pointage.id)).scalar()
+		print("last={}".format(last))
+		for day in Default.DAYS:
+			ferie = int(feries.get(day))
+			print("ferie={}".format(ferie))
+			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
+			print("jour={}".format(jour))
+			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
+			print("nuit={}".format(nuit))
+			details = Detailpointage(idpointage=int(last),
+									jour=day,
+									est_ferier=ferie,
+									heure_jour=jour,
+									heure_nuit=nuit)
+			db.session.add(details)
+	except:
+		abort(500)
+	db.session.commit()
+
+	

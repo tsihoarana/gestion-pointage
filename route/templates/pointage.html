@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1>Pointage</h1>
-	<form method="POST" action="{{url_for('pointage.insert_pointage')}}">
+	<form method="POST" action="{{url_for('pointage.insert_pointage', user_id = request.args.get('user_id'))}}">
 		<table class="table">
 		  <tr>
 		    <th style="width:200px;"></th>
