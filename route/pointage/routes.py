@@ -34,4 +34,4 @@ def insert_pointage(user_id):
         if typ == 'nuit':
             nuit[name] = request.form.get(key)
     services.insertdb_pointage(user_id, ferie, jour, nuit)
-    return render_template('home.html', title='Listes categories', val=ferie)
+    return redirect(url_for('users.user'))

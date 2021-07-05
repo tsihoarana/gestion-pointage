@@ -12,8 +12,8 @@ CREATE TABLE "detailpointage" (
     "idpointage" INT NOT NULL,
     "jour" VARCHAR (20) NOT NULL,
     "est_ferier" INT NOT NULL, -- 1 si oui
-    "heure_jour" INT NOT NULL,
-    "heure_nuit" INT NOT NULL,
+    "heure_jour" INT NOT NULL CHECK ("heure_jour" >= 0),
+    "heure_nuit" INT NOT NULL CHECK ("heure_nuit" >= 0),
     FOREIGN KEY ("idpointage") REFERENCES "pointage" ("id")
 );
 
