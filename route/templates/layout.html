@@ -38,6 +38,7 @@
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<!-- <a class="dropdown-item" href="url_for('avion.list_avion')">Avion</a> -->
 						<a class="dropdown-item" href="{{url_for('users.user')}}">Employe</a>
+						<a class="dropdown-item" href="{{url_for('categorie.cat')}}">Categorie</a>
 						
 					</div>
 				</div>
@@ -51,6 +52,7 @@
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<!-- <a class="dropdown-item" href="url_for('avion.new_avion')">Ajout Avion</a> -->
 							<a class="dropdown-item" href="{{url_for('users.register')}}">Ajout employe</a>
+							<a class="dropdown-item" href="{{url_for('categorie.add_cat')}}">Ajout categorie</a>
 						</div>
 					</div>
 				{% endif %}

@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes des categories</h1>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">nom</th>
+		  <th scope="col">heure_hebdo</th>
+		  <th scope="col">salaire_hebdo</th>
+		  <th scope="col">liste_jour</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for cat in cats.items %}
+		<tr>
+		  <td>{{cat.id}}</td>
+		  <td>{{cat.nom}}</td>
+		  <td>{{cat.heure_hebdo}}</td>
+		  <td>{{cat.salaire_hebdo}}</td>
+		  <td>{{cat.liste_jour}}</td>
+		  {% if current_user.is_authenticated and current_user.type_user == 1 %}
+		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
+		  url_for('users.user_update', iduser=user.id)-->
+		  <td><a class="btn btn-outline-success" href="{{url_for('categorie.updateCat', cat_id=cat.id)}}">Modifier</a></td>
+		  {% endif %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% for page_num in cats.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			{% if cats.page == page_num %}
+				<a class="btn btn-info mb-4" href="{{ url_for('categorie.cat', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('categorie.cat', page=page_num) }}">{{ page_num }}</a>
+
+			{% endif %}
+		{% else %}
+			...
+		{% endif %}
+	{% endfor %}
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Ajout / Modification categorie</legend>
+                <div class="form-group">
+                    {{ form.nom.label(class="form-control-label") }}
+                    {% if form.nom.errors %}
+                        {{ form.nom(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.nom.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.nom(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.heure_hebdo.label(class="form-control-label") }}
+                    {% if form.heure_hebdo.errors %}
+                        {{ form.heure_hebdo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.heure_hebdo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.heure_hebdo(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.salaire_hebdo.label(class="form-control-label") }}
+                    {% if form.salaire_hebdo.errors %}
+                        {{ form.salaire_hebdo(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.salaire_hebdo.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.salaire_hebdo(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.liste_jour.label(class="form-control-label") }}
+                    {% if form.liste_jour.errors %}
+                        {{ form.liste_jour(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.liste_jour.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.liste_jour(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+    </div>
+{% endblock content %}
