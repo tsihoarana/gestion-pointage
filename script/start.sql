@@ -58,14 +58,3 @@ INSERT INTO "config" VALUES (DEFAULT, 'HS50', 'Heure supp', 150);
 INSERT INTO "config" VALUES (DEFAULT, 'HM30', 'Heure majore', 130);
 INSERT INTO "config" VALUES (DEFAULT, 'HM40', 'Heure majore', 140);
 INSERT INTO "config" VALUES (DEFAULT, 'HM0', 'Heure majore', 150);
-
--- views
-CREATE VIEW v_EmployeNoPassword AS (
-	SELECT 
-		idemploye, matricule, nom, prenom,
-		CASE
-           WHEN type_user = 0 THEN 'Simple'
-           WHEN type_user = 1 THEN 'Admin'
-       END type_user
-	FROM Employe
-);
