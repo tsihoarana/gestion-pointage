@@ -27,7 +27,7 @@
 		  <td>{{user.date_fin_contrat}}</td>
 		  <td>{{user.type_user}}</td>
 		  <td>{{user.idcategorie}}</td>
-		  {% if current_user.is_authenticated and current_user.type== '0' %}
+		  {% if current_user.is_authenticated and current_user.type_user == 1 %}
 		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
 		  url_for('users.user_update', iduser=user.id)-->
 		  <td><a class="btn btn-outline-success" href="#">Modifier</a></td>
