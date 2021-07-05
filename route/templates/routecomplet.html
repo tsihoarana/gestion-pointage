@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes des routes et etats</h1>
+	<a href="{{url_for('route.export_pdf', num=routes.items[0].numero)}}" class="btn btn-outline-danger">Exporter PDF</a>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Numero</th>
+		  <th scope="col">Depart</th>
+		  <th scope="col">Arrivee</th>
+		  <th scope="col">Distance</th>
+		  <th scope="col">Idportionroute</th>
+		  <th scope="col">Debut</th>
+		  <th scope="col">Fin</th>
+		  <th scope="col">Etat</th>
+		  <th scope="col">Cout Reparation</th>
+		  <th scope="col">Visuel</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for route in routes.items %}
+		<tr>
+		  <td>{{route.id}}</td>
+		  <td>{{route.numero}}</td>
+		  <td>{{route.depart}}</td>
+		  <td>{{route.arrivee}}</td>
+		  <td>{{route.distance}}</td>
+		  <td>{{route.idportionroute}}</td>
+		  <td>{{route.debut}}</td>
+		  <td>{{route.fin}}</td>
+		  <td>{{route.etat}}</td>
+		  <td>{{route.reparation | round(2)}} AR</td>
+		  <td><div style="background-color: {{utils.colorRoad(route.etat)}}; min-width:10px ;min-height:10px" ></div></td>
+		  {% if current_user.type == '0' %}
+		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) -->
+		  <td><a class="btn btn-outline-success" href="{{url_for('route.update_route', portion_id=route.idportionroute)}}">Modifier</a></td>
+		  {% endif %}
+		  {% if current_user.type == '1' %}
+		  <td><a class="btn btn-outline-success" href="{{url_for('route.reparer_route', num=route.idportionroute, m=0)}}">Reparer</a></td>
+		  {% endif %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% for page_num in routes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			{% if routes.page == page_num %}
+				<a class="btn btn-info mb-4" href="{{ url_for('route.routescomplet', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('route.routescomplet', page=page_num) }}">{{ page_num }}</a>
+
+			{% endif %}
+		{% else %}
+			...
+		{% endif %}
+	{% endfor %}
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes des utilisateurs</h1>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Username</th>
+		  <th scope="col">Privilege</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for user in users %}
+		<tr>
+		  <td>{{user.id}}</td>
+		  <td>{{user.username}}</td>
+		  <td>{{user.type}}</td>
+		  {% if current_user.is_authenticated and current_user.type== '0' %}
+		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) -->
+		  <td><a class="btn btn-outline-success" href="{{url_for('users.user_update', iduser=user.id)}}">Modifier</a></td>
+		  <td><a class="btn btn-outline-success" href="{{url_for('users.add_budget', user_id=user.id)}}">Budget</a></td>
+		  {% endif %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock content %}

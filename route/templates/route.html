@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes des routes</h1>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Numero</th>
+		  <th scope="col">Depart</th>
+		  <th scope="col">Arrivee</th>
+		  <th scope="col">Distance</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for route in routes.items %}
+		<tr>
+		  <td>{{route.id}}</td>
+		  <td>{{route.numero}}</td>
+		  <td>{{route.depart}}</td>
+		  <td>{{route.arrivee}}</td>
+		  <td>{{route.distance}} km</td>
+		  {% if current_user.type == '0' %}
+		  <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) -->
+		  	{% if route.etat == 'modifiable' %}
+		  <td><a class="btn btn-outline-success" href="{{url_for('route.route_update', route_id=route.id)}}">Modifier</a></td>
+		  <td><a class="btn btn-outline-success" href="{{url_for('route.add_portion', route_id=route.id)}}">Ajout portion</a></td>
+		  <td><a class="btn btn-outline-success" href="{{url_for('route.validate_route', route_id=route.id)}}">Valider</a></td>
+		  	{% endif %}
+		  {% endif %}
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% for page_num in routes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+			{% if routes.page == page_num %}
+				<a class="btn btn-info mb-4" href="{{ url_for('route.routes', page=page_num) }}">{{ page_num }}</a>
+			{% else %}
+				<a class="btn btn-outline-info mb-4" href="{{ url_for('route.routes', page=page_num) }}">{{ page_num }}</a>
+
+			{% endif %}
+		{% else %}
+			...
+		{% endif %}
+	{% endfor %}
+{% endblock content %}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes des etats de routes</h1>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">#</th>
+		  <th scope="col">Etat</th>
+		  <th scope="col">Nom</th>
+		  <th scope="col">Mauvaise route</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for etatroute in etatroutes %}
+		<tr>
+		  <td>{{etatroute.id}}</td>
+		  <td>{{etatroute.etat}}</td>
+		  <td>{{etatroute.nom}}</td>
+		  <td>{{etatroute.pourcentage}}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock content %}
