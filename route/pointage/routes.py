@@ -36,8 +36,10 @@ def insert_pointage(user_id):
     services.insertdb_pointage(user_id, ferie, jour, nuit)
     return redirect(url_for('users.user'))
 
-@pointage.route('/pointage/<int:user_id>/calcul')
+@pointage.route('/pointage/<int:user_id>/calcul/<int:pointage_id>')
 @login_required
-def calcul_heure(user_id):
+def calcul_heure(user_id, pointage_id):
     user = User.query.get_or_404(user_id)
+    pointage = Pointage.query.get_or_404(pointage_id)
+    services.calcul_heure(pointage)
     return render_template('heure_semaine.html', title="Calcul heure", user=user)

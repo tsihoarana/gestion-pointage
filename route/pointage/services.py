@@ -25,4 +25,8 @@ def insertdb_pointage(user, feries, jours, nuits):
 		abort(500)
 	db.session.commit()
 
-	
+def calcul_heure(pointage):
+	details = Detailpointage.query.filter_by(idpointage=pointage.id)
+	for detail in details:
+		print(detail)
+	return details
