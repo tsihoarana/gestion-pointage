@@ -3,6 +3,7 @@ from route.config import Default
 from route import db
 from flask import abort, flash
 from sqlalchemy import func
+from route.config import Default
 
 def insertdb_pointage(user, feries, jours, nuits):
 	try:
@@ -14,6 +15,10 @@ def insertdb_pointage(user, feries, jours, nuits):
 			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
 			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
 			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
+			if jour > Default.TEMPS_JOUR or nuit > Default.TEMPS_NUIT or ferie > 24:
+				db.session.rollback()
+				flash("Donnees Invalide", 'danger')
+				abort(500)
 			details = Detailpointage(idpointage=int(last),
 									jour=day,
 									est_ferier=ferie,
@@ -21,9 +26,15 @@ def insertdb_pointage(user, feries, jours, nuits):
 									heure_nuit=nuit)
 			db.session.add(details)
 	except:
+		db.session.rollback()
 		flash("Donnees Invalide", 'danger')
 		abort(500)
-	db.session.commit()
+	try:
+		db.session.commit()
+	except:
+		db.session.rollback()
+		flash("Donnees Invalide", 'danger')
+		abort(500)
 	return last
 
 def heure_journuit(details):
