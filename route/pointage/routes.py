@@ -9,6 +9,14 @@ from route.pointage import services
 
 pointage = Blueprint('pointage', __name__)
 
+@pointage.route('/pointage/list', methods=['GET', 'POST'])
+@login_required
+def list_pointage():
+    page = request.args.get('page', 1, type=int)
+    points = Pointage.query.paginate(page=page, per_page=5)
+    return render_template('list_pointage.html', title='Listes pointages', points=points)
+
+
 
 @pointage.route('/pointage', methods=['GET', 'POST'])
 @login_required
