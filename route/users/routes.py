@@ -54,7 +54,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(f'Account created for {form.nom.data}', 'success')
-        return redirect(url_for('main.home'))
+        return redirect(url_for('users.user'))
     return render_template('register.html', title='Register', form=form)
 
 @users.route('/user/<int:user_id>/update', methods=['GET', 'POST'])

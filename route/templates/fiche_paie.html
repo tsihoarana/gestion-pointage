@@ -20,13 +20,13 @@
 		{% for key, value in results.items() %}
 		<tr>
 		  <th>{{key}}</th>
-		  <td>{{value[0]}}</td>
-		  <td>{{value[1]}}</td>
-		  <td>{{value[2]}}</td>
+		  <td>{{value[0]}} h</td>
+		  <td>{{value[1]}} Ar</td>
+		  <td>{{value[2]}} Ar</td>
 		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
-	<p><b>Indemnite:</b> {{indemnite}}</p>
-	<p><b>Total a payer:</b> {{total_paye}}</p>
+	<p><b>Indemnite:</b> {{indemnite}} Ar</p>
+	<p><b>Total a payer:</b> {{total_paye}} Ar</p>
 {% endblock content %}
