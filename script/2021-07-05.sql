@@ -11,9 +11,9 @@ CREATE TABLE "detailpointage" (
     "id" INT PRIMARY KEY NOT NULL DEFAULT NEXTVAL('"detailPointageSeq"'),
     "idpointage" INT NOT NULL,
     "jour" VARCHAR (20) NOT NULL,
-    "est_ferier" INT NOT NULL, -- 1 si oui
-    "heure_jour" INT NOT NULL CHECK ("heure_jour" >= 0),
-    "heure_nuit" INT NOT NULL CHECK ("heure_nuit" >= 0),
+    "est_ferier" FLOAT NOT NULL CHECK ("est_ferier" >= 0),
+    "heure_jour" FLOAT NOT NULL CHECK ("heure_jour" >= 0),
+    "heure_nuit" FLOAT NOT NULL CHECK ("heure_nuit" >= 0),
     FOREIGN KEY ("idpointage") REFERENCES "pointage" ("id")
 );
 

@@ -57,4 +57,4 @@ INSERT INTO "config" VALUES (DEFAULT, 'HS30', 'Heure supp', 130);
 INSERT INTO "config" VALUES (DEFAULT, 'HS50', 'Heure supp', 150);
 INSERT INTO "config" VALUES (DEFAULT, 'HM30', 'Heure majore', 130);
 INSERT INTO "config" VALUES (DEFAULT, 'HM40', 'Heure majore', 140);
-INSERT INTO "config" VALUES (DEFAULT, 'HM0', 'Heure majore', 150);
+INSERT INTO "config" VALUES (DEFAULT, 'HM50', 'Heure majore', 150);

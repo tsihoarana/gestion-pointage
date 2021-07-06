@@ -16,30 +16,28 @@ def add_pointage():
     days = Default.DAYS
     return render_template('pointage.html', title='Listes categories', days=days)
 
-@pointage.route('/pointage/<int:user_id>')
+@pointage.route('/pointage/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 def insert_pointage(user_id):
     days = Default.DAYS
     ferie = {}
     jour = {}
     nuit = {}
-    for day in days:
-        ferie[day] = 0
     for key in request.form:
         name, typ = key.split("_")
         if typ == 'ferie':
-            ferie[name] = 1
+            ferie[name] = request.form.get(key)
         if typ == 'jour':
             jour[name] = request.form.get(key)
         if typ == 'nuit':
             nuit[name] = request.form.get(key)
-    services.insertdb_pointage(user_id, ferie, jour, nuit)
-    return redirect(url_for('users.user'))
+    pointage_id = services.insertdb_pointage(user_id, ferie, jour, nuit)
+    return redirect(url_for('pointage.calcul_heure', user_id=user_id, pointage_id=pointage_id))
 
-@pointage.route('/pointage/<int:user_id>/calcul/<int:pointage_id>')
+@pointage.route('/pointage/<int:user_id>/calcul/<int:pointage_id>', methods=['GET', 'POST'])
 @login_required
 def calcul_heure(user_id, pointage_id):
     user = User.query.get_or_404(user_id)
     pointage = Pointage.query.get_or_404(pointage_id)
-    services.calcul_heure(pointage)
-    return render_template('heure_semaine.html', title="Calcul heure", user=user)
+    res = services.calcul_heure(user, pointage)
+    return render_template('heure_semaine.html', title="Calcul heure", user=user, results=res)

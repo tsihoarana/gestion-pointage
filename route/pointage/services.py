@@ -11,7 +11,7 @@ def insertdb_pointage(user, feries, jours, nuits):
 		last = db.session.query(func.max(Pointage.id)).scalar()
 		print("last={}".format(last))
 		for day in Default.DAYS:
-			ferie = int(feries.get(day))
+			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
 			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
 			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
 			details = Detailpointage(idpointage=int(last),
@@ -24,9 +24,84 @@ def insertdb_pointage(user, feries, jours, nuits):
 		flash("Donnees Invalide", 'danger')
 		abort(500)
 	db.session.commit()
+	return last
 
-def calcul_heure(pointage):
-	details = Detailpointage.query.filter_by(idpointage=pointage.id)
+def heure_journuit(details):
+	somj = 0
+	somn = 0
 	for detail in details:
-		print(detail)
-	return details
+		if detail.est_ferier == 0 and detail.jour != "DIMANCHE":
+			somj += detail.heure_jour
+			somn += detail.heure_nuit
+
+	return somj, somn
+
+def heure_dimanche(details):
+	dim = 0
+	for detail in details:
+		if detail.est_ferier == 0 and detail.jour == "DIMANCHE":
+			dim += detail.heure_jour
+			dim += detail.heure_nuit
+
+	return dim
+
+def heure_ferie_trav(details):
+	som = 0
+	for detail in details:
+		if detail.est_ferier > 0:
+			som += detail.heure_jour
+			som += detail.heure_nuit
+
+	return som
+
+def heure_ferie(details):
+	som = 0
+	for detail in details:
+		if detail.est_ferier > 0:
+			som += detail.est_ferier
+
+	return som
+
+def heure_total(details):
+	"""
+		return heure total semaine
+	"""
+	som = 0
+	for detail in details:
+		som += detail.est_ferier
+		som += detail.heure_jour
+		som += detail.heure_nuit
+
+	return som
+
+def heure_supp(user, details):
+	total = heure_total(details)
+	heure_norm = user.cat.heure_hebdo
+	supp_total =  max(0, (total - heure_norm))
+	supp30 = min(8, supp_total)
+	supp50 = max(0, min(12, supp_total - supp30))
+	return supp30, supp50
+
+
+
+def calcul_heure(user, pointage):
+	details = Detailpointage.query.filter_by(idpointage=pointage.id)
+	jour, nuit = heure_journuit(details)
+	dimanche = heure_dimanche(details)
+	ferie_trav = heure_ferie_trav(details)
+	ferie = heure_ferie(details)
+	supp30, supp50 = heure_supp(user, details)
+	result = {}
+	result["Nb heure jour"] = jour
+	result["Nb heure nuit"] = nuit
+	result["Nb heure dimanche"] = dimanche
+	result["Nb heure jour ferie travaille"] = ferie_trav
+	result["Nb heure jour ferie"] = ferie
+	result["Nb heure supp 30%"] = supp30
+	result["Nb heure supp 50%"] = supp50
+	print(result)
+	return result
+	# print("jour={}, nuit={}".format(jour, nuit))
+	# print("dimanche={}".format(dimanche))
+	# print("ferie_trav={}".format(ferie_trav))
+	# print("sup30={}, supp50={}".format(supp30, supp50))

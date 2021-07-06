@@ -15,10 +15,12 @@
 		</tr>
 		</thead>
 		<tbody>
+		{% for key, value in results.items() %}
 		<tr>
-		  <td>HM40</td>
-		  <td>2</td>
+		  <th>{{key}}</th>
+		  <td>{{value}}</td>
 		</tr>
+		{% endfor %}
 		</tbody>
 	</table>
 {% endblock content %}
