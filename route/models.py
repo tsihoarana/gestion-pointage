@@ -28,6 +28,7 @@ class Categorie(db.Model):
     nom = db.Column(db.String(20), unique=True, nullable=False)
     heure_hebdo = db.Column(db.Integer, nullable=False)
     salaire_hebdo = db.Column(db.Numeric(15,3), nullable=False)
+    indemnite = db.Column(db.Numeric(15,3), nullable=False)
     liste_jour = db.Column(db.String(100), nullable=False)
     users = db.relationship('User', backref='cat', lazy=True)
     def __repr__(self):

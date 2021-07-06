@@ -23,6 +23,7 @@ def add_cat():
         cat = Categorie(nom=form.nom.data,
                     heure_hebdo=form.heure_hebdo.data,
                     salaire_hebdo=form.salaire_hebdo.data,
+                    indemnite=form.indemnite.data,
                     liste_jour=form.liste_jour.data)
         db.session.add(cat)
         db.session.commit()

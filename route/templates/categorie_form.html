@@ -45,6 +45,19 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                    {{ form.indemnite.label(class="form-control-label") }}
+                    {% if form.indemnite.errors %}
+                        {{ form.indemnite(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.indemnite.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.indemnite(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
                     {{ form.liste_jour.label(class="form-control-label") }}
                     {% if form.liste_jour.errors %}
                         {{ form.liste_jour(class="form-control form-control-lg is-invalid") }}
