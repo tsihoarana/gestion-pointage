@@ -42,10 +42,10 @@ CREATE TABLE "config" (
 );
 
 -- Categorie
-INSERT INTO "categorie" VALUES (DEFAULT, 'NORMAL', 40, 100000.0, 0.3, 'lundi,mardi,mercredi,jeudi,vendredi');
-INSERT INTO "categorie" VALUES (DEFAULT, 'GARDIEN', 56, 110000.0, 0.3, 'lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche');
-INSERT INTO "categorie" VALUES (DEFAULT, 'CADRE', 40, 200000.0, 0.3, 'lundi,mardi,mercredi,jeudi,vendredi');
-INSERT INTO "categorie" VALUES (DEFAULT, 'CHAUFFEUR', 40, 100000.0, 0.3, 'lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche');
+INSERT INTO "categorie" VALUES (DEFAULT, 'NORMAL', 40, 100000.0, 100000.0*0.3, 'lundi,mardi,mercredi,jeudi,vendredi');
+INSERT INTO "categorie" VALUES (DEFAULT, 'GARDIEN', 56, 110000.0, 110000.0*0.3, 'lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche');
+INSERT INTO "categorie" VALUES (DEFAULT, 'CADRE', 40, 200000.0, 200000.0*0.3, 'lundi,mardi,mercredi,jeudi,vendredi');
+INSERT INTO "categorie" VALUES (DEFAULT, 'CHAUFFEUR', 40, 100000.0, 100000.0*0.3, 'lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche');
 
 -- Employe pwd: '123'
 INSERT INTO "user" VALUES (DEFAULT, '001', 'Rabe', 'Zafy', '1998-01-01', '2021-07-04', '2021-12-30', 1, '1', '$2b$12$yl/AYNpyhpjvca6VTv47JeyS9.KgiE0FP9filxFv8vFvWH1Sa.EEu');
