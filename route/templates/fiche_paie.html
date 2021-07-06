@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Calcul Heure</h1>
+	<h1>Fiche de Paie</h1>
 
 	<p><b>Nom:</b> {{user.nom}}</p>
 	<p><b>Prenom:</b> {{user.prenom}}</p>
@@ -12,17 +12,21 @@
 		<tr>
 		  <th scope="col">Designation</th>
 		  <th scope="col">Total</th>
+		  <th scope="col">Taux horaire</th>
+		  <th scope="col">Montant</th>
 		</tr>
 		</thead>
 		<tbody>
 		{% for key, value in results.items() %}
 		<tr>
 		  <th>{{key}}</th>
-		  <td>{{value}}</td>
+		  <td>{{value[0]}}</td>
+		  <td>{{value[1]}}</td>
+		  <td>{{value[2]}}</td>
 		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
-	<a class="btn btn-outline-info mb-4" href="{{ url_for('pointage.fiche_paie', user_id=user.id, pointage_id=pointage.id) }}">Fiche de paie</a>
-
+	<p><b>Indemnite:</b> {{indemnite}}</p>
+	<p><b>Total a payer:</b> {{total_paye}}</p>
 {% endblock content %}

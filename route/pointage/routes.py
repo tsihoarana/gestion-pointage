@@ -48,4 +48,14 @@ def calcul_heure(user_id, pointage_id):
     user = User.query.get_or_404(user_id)
     pointage = Pointage.query.get_or_404(pointage_id)
     res = services.calcul_heure(user, pointage)
-    return render_template('heure_semaine.html', title="Calcul heure", user=user, results=res)
+    return render_template('heure_semaine.html', title="Calcul heure", user=user, results=res, pointage=pointage)
+
+@pointage.route('/pointage/<int:user_id>/fiche-de-paie/<int:pointage_id>', methods=['GET', 'POST'])
+@login_required
+def fiche_paie(user_id, pointage_id):
+    user = User.query.get_or_404(user_id)
+    pointage = Pointage.query.get_or_404(pointage_id)
+    paie, indemnite, total_paye = services.fiche_de_paie(user, pointage)
+    # return render_template('home.html')
+    return render_template('fiche_paie.html', title="Fiche de paie", user=user, results=paie,
+                                            indemnite=indemnite, total_paye=total_paye)

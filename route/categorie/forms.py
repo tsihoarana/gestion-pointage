@@ -15,7 +15,6 @@ class CatForm(FlaskForm):
                             validators=[DataRequired(), NumberRange(min=1)],
                             widget=h5widgets.NumberInput(min=1))
     salaire_hebdo = DecimalField('Salaire Hebdo', validators=[DataRequired(), NumberRange(min=1)])
-    indemnite = DecimalField('Indemnite', validators=[DataRequired(), NumberRange(min=0)])
     liste_jour = StringField('Liste Jour', 
                             validators=[DataRequired()])
 

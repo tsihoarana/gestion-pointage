@@ -1,4 +1,4 @@
-from route.models import Pointage, Detailpointage
+from route.models import Pointage, Detailpointage, Config
 from route.config import Default
 from route import db
 from flask import abort, flash
@@ -105,3 +105,55 @@ def calcul_heure(user, pointage):
 	# print("dimanche={}".format(dimanche))
 	# print("ferie_trav={}".format(ferie_trav))
 	# print("sup30={}, supp50={}".format(supp30, supp50))
+
+
+def tomap(configs):
+	m = {}
+	for config in configs:
+		m[config.cle] = config.valeur
+	return m
+
+
+def fiche_de_paie(user, pointage):
+	heures = calcul_heure(user, pointage)
+	heure_hebdo = user.cat.heure_hebdo
+	salaire_hebdo = user.cat.salaire_hebdo
+	taux_h = float(salaire_hebdo/heure_hebdo)
+	paie ={}
+	arr = []
+
+	configs = Config.query.all()
+	map_conf = tomap(configs)
+	total_paye = 0
+	for key, value in heures.items():
+		val = float(value)
+		arr.append(value)
+		if key == "Nb heure nuit":
+			th = taux_h  * float(map_conf.get("HM30"))/100
+			arr.append(th)
+		elif key == "Nb heure dimanche":
+			th = taux_h  * float(map_conf.get("HM40"))/100
+			arr.append(th)
+		elif key == "Nb heure supp 30%":
+			th = taux_h  * float(map_conf.get("HS30"))/100
+			arr.append(th)
+		elif key == "Nb heure supp 50%":
+			th = taux_h  * float(map_conf.get("HS50"))/100
+			arr.append(th)
+		elif key == "Nb heure jour ferie travaille":
+			th = taux_h  * float(map_conf.get("HM50"))/100
+			arr.append(th)
+		else:
+			th = taux_h * 100/100
+			arr.append(th)
+
+		arr.append(th * val)
+		paie[key] = arr
+		arr = list()
+		total_paye += (th * val)
+
+	heuret = heure_total(Detailpointage.query.filter_by(idpointage=pointage.id))
+	heuretdiff = heure_hebdo - heuret
+	indemnite = user.cat.indemnite if heuretdiff <= 0 else 0
+	total_paye += float(indemnite)
+	return paie, indemnite, total_paye

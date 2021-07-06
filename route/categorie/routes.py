@@ -3,6 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from route.models import Categorie
 from route.categorie.forms import CatForm
 from route import db
+from route.config import Default
 
 
 categorie = Blueprint('categorie', __name__)
@@ -20,10 +21,11 @@ def cat():
 def add_cat():
     form = CatForm()
     if form.validate_on_submit():
+        indemnite = float(form.salaire_hebdo.data) * Default.TAUX_INDEMNITE
         cat = Categorie(nom=form.nom.data,
                     heure_hebdo=form.heure_hebdo.data,
                     salaire_hebdo=form.salaire_hebdo.data,
-                    indemnite=form.indemnite.data,
+                    indemnite=indemnite,
                     liste_jour=form.liste_jour.data)
         db.session.add(cat)
         db.session.commit()
@@ -40,6 +42,8 @@ def updateCat(cat_id):
         cat.nom = form.nom.data
         cat.heure_hebdo = form.heure_hebdo.data
         cat.salaire_hebdo = form.salaire_hebdo.data
+        indemnite = float(form.salaire_hebdo.data) * Default.TAUX_INDEMNITE
+        cat.indemnite = indemnite
         cat.liste_jour = form.liste_jour.data
 
         db.session.commit()
