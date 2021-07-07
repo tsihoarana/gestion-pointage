@@ -1,32 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Fiche de Paie</h1>
+	<div id="fiche">
+		<h1>Fiche de Paie</h1>
+	
+		<p><b>Nom:</b> {{user.nom}}</p>
+		<p><b>Prenom:</b> {{user.prenom}}</p>
+		<p><b>Matricule:</b> {{user.matricule}}</p>
+		<p><b>Categorie:</b> {{user.cat.nom}}</p>
 
-	<p><b>Nom:</b> {{user.nom}}</p>
-	<p><b>Prenom:</b> {{user.prenom}}</p>
-	<p><b>Matricule:</b> {{user.matricule}}</p>
-	<p><b>Categorie:</b> {{user.cat.nom}}</p>
-
-	<table class="table">
-		<thead>
-		<tr>
-		  <th scope="col">Designation</th>
-		  <th scope="col">Total</th>
-		  <th scope="col">Taux horaire</th>
-		  <th scope="col">Montant</th>
-		</tr>
-		</thead>
-		<tbody>
-		{% for key, value in results.items() %}
-		<tr>
-		  <th>{{key}}</th>
-		  <td>{{value[0]}} h</td>
-		  <td>{{value[1]}} Ar</td>
-		  <td>{{value[2]}} Ar</td>
-		</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-	<p><b>Indemnite:</b> {{indemnite}} Ar</p>
-	<p><b>Total a payer:</b> {{total_paye}} Ar</p>
+		<table class="table">
+			<thead>
+			<tr>
+			  <th scope="col">Designation</th>
+			  <th scope="col">Total</th>
+			  <th scope="col">Taux horaire</th>
+			  <th scope="col">Montant</th>
+			</tr>
+			</thead>
+			<tbody>
+			{% for key, value in results.items() %}
+			<tr>
+			  <th>{{key}}</th>
+			  <td>{{value[0]}} h</td>
+			  <td>{{value[1]}} Ar</td>
+			  <td>{{value[2]}} Ar</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		<p><b>Indemnite:</b> {{indemnite}} Ar</p>
+		<p><b>Total a payer:</b> {{total_paye}} Ar</p>
+	</div>
+	<button class="btn btn-outline-danger" onclick="generatePDF()">Export PDF</button>
+	<script>
+		function generatePDF(){
+			const element = document.getElementById("fiche");
+			html2pdf()
+			.from(element)
+			.save();
+		}
+	</script>
 {% endblock content %}
