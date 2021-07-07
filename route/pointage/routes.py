@@ -39,7 +39,12 @@ def insert_pointage(user_id):
             jour[name] = request.form.get(key)
         if typ == 'nuit':
             nuit[name] = request.form.get(key)
-    pointage_id = services.insertdb_pointage(user_id, ferie, jour, nuit)
+
+    pointage = Pointage.query.filter_by(iduser=user_id).first()
+    if pointage == None:
+        pointage_id = services.insertdb_pointage(user_id, ferie, jour, nuit)
+    else:
+        pointage_id = services.updatedb_pointage(user_id, ferie, jour, nuit)
     return redirect(url_for('pointage.calcul_heure', user_id=user_id, pointage_id=pointage_id))
 
 @pointage.route('/pointage/<int:user_id>/calcul/<int:pointage_id>', methods=['GET', 'POST'])

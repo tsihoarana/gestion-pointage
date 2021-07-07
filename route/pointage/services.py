@@ -110,7 +110,7 @@ def calcul_heure(user, pointage):
 	result["Nb heure jour ferie"] = ferie
 	result["Nb heure supp 30%"] = supp30
 	result["Nb heure supp 50%"] = supp50
-	print(result)
+	# print(result)
 	return result
 	# print("jour={}, nuit={}".format(jour, nuit))
 	# print("dimanche={}".format(dimanche))
@@ -168,3 +168,41 @@ def fiche_de_paie(user, pointage):
 	indemnite = user.cat.indemnite if heuretdiff <= 0 else 0
 	total_paye += float(indemnite)
 	return paie, indemnite, total_paye
+
+def test():
+	details = Pointage.query.filter_by(iduser=2).first()
+	if details == None:
+		print("NOne eeee")
+	else:
+		print(details.id)
+
+def updatedb_pointage(user, feries, jours, nuits):
+	try:
+		pointage = Pointage.query.filter_by(iduser=int(user)).first()
+		for day in Default.DAYS:
+			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
+			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
+			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
+			if jour > Default.TEMPS_JOUR or nuit > Default.TEMPS_NUIT or ferie > 24:
+				db.session.rollback()
+				flash("Donnees Invalide", 'danger')
+				abort(500)
+			detail = Detailpointage.query.filter_by(idpointage=pointage.id, jour=day).first()
+			print("bbbbbbbbbb={}".format(detail.id))
+
+			detail.jour=day
+			detail.est_ferier=ferie
+			detail.heure_jour=jour
+			detail.heure_nuit=nuit
+			# db.session.commit()
+	except:
+		db.session.rollback()
+		flash("Donnees Invalide", 'danger')
+		abort(500)
+	try:
+		db.session.commit()
+	except:
+		db.session.rollback()
+		flash("Donnees Invalide", 'danger')
+		abort(500)
+	return pointage.id

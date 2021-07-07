@@ -24,6 +24,7 @@ INSERT INTO Pointage VALUES (DEFAULT, '1');
     INSERT INTO DetailPointage VALUES (DEFAULT, '1', 'JEUDI', 0, 10, 0);
     INSERT INTO DetailPointage VALUES (DEFAULT, '1', 'VENDREDI', 0, 8, 0);
     INSERT INTO DetailPointage VALUES (DEFAULT, '1', 'SAMEDI', 0, 8, 0);
+    INSERT INTO DetailPointage VALUES (DEFAULT, '1', 'DIMANCHE', 0, 8, 0);
 
 INSERT INTO Pointage VALUES (DEFAULT, '2');
     INSERT INTO DetailPointage VALUES (DEFAULT, '2', 'LUNDI', 0, 10, 0);
