@@ -10,7 +10,7 @@ def insertdb_pointage(user, feries, jours, nuits):
 		pointage = Pointage(iduser=int(user))
 		db.session.add(pointage)
 		last = db.session.query(func.max(Pointage.id)).scalar()
-		print("last={}".format(last))
+		# print("last={}".format(last))
 		for day in Default.DAYS:
 			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
 			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
@@ -49,7 +49,6 @@ def updatedb_pointage(user, feries, jours, nuits):
 				flash("Donnees Invalide", 'danger')
 				abort(500)
 			detail = Detailpointage.query.filter_by(idpointage=pointage.id, jour=day).first()
-			print("bbbbbbbbbb={}".format(detail.id))
 
 			detail.jour=day
 			detail.est_ferier=ferie
@@ -218,3 +217,36 @@ def users_total():
 
 	# print(all_users)
 	return all_users, all_total
+
+def dummy_fiche():
+	keys = ["Nb heure jour", "Nb heure nuit", "Nb heure dimanche", "Nb heure jour ferie travaille",
+			"Nb heure jour ferie", "Nb heure supp 30%", "Nb heure supp 50%"]
+	res = {}
+	for key in keys:
+		res[key] = [0, 0, 0]
+	return res
+
+def paie_total():
+	users = User.query.all()
+	keys = ["Nb heure jour", "Nb heure nuit", "Nb heure dimanche", "Nb heure jour ferie travaille",
+			"Nb heure jour ferie", "Nb heure supp 30%", "Nb heure supp 50%"]
+	dummy = dummy_fiche()
+	ans = {}
+	all_total = 0
+	res = []
+	for user in users:
+		pointage = Pointage.query.filter_by(iduser=user.id).first()
+		if pointage != None:
+			res.append(fiche_de_paie(user, pointage))
+		else:
+			res.append((dummy, 0, 0))
+
+	for key in keys:
+		t, m = 0, 0
+		for result in res:
+			paie, indemnite, total_paye = result
+			t += paie[key][0]
+			m += paie[key][2]
+		ans[key] = [t, m]
+
+	return ans

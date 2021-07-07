@@ -8,7 +8,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @main.route('/home')
 def home():
-    services.users_total()
+    services.paie_total()
     return render_template('home.html', title='Gestion Route', cur=current_user)
 
 
