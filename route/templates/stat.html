@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Listes employees avec montant à payer</h1>
+	<table class="table">
+		<thead>
+		<tr>
+		  <th scope="col">Matricule</th>
+		  <th scope="col">Montant</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for key, value in users.items() %}
+		<tr>
+		  <td>{{key}}</td>
+		  <td>{{value}} Ar</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<h4>Total: {{total}} Ar</h4>
+{% endblock content %}

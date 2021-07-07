@@ -1,4 +1,4 @@
-from route.models import Pointage, Detailpointage, Config
+from route.models import Pointage, Detailpointage, Config, User
 from route.config import Default
 from route import db
 from flask import abort, flash
@@ -36,6 +36,39 @@ def insertdb_pointage(user, feries, jours, nuits):
 		flash("Donnees Invalide", 'danger')
 		abort(500)
 	return last
+
+def updatedb_pointage(user, feries, jours, nuits):
+	try:
+		pointage = Pointage.query.filter_by(iduser=int(user)).first()
+		for day in Default.DAYS:
+			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
+			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
+			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
+			if jour > Default.TEMPS_JOUR or nuit > Default.TEMPS_NUIT or ferie > 24:
+				db.session.rollback()
+				flash("Donnees Invalide", 'danger')
+				abort(500)
+			detail = Detailpointage.query.filter_by(idpointage=pointage.id, jour=day).first()
+			print("bbbbbbbbbb={}".format(detail.id))
+
+			detail.jour=day
+			detail.est_ferier=ferie
+			detail.heure_jour=jour
+			detail.heure_nuit=nuit
+			# db.session.commit()
+	except:
+		db.session.rollback()
+		flash("Donnees Invalide", 'danger')
+		abort(500)
+	try:
+		db.session.commit()
+	except:
+		db.session.rollback()
+		flash("Donnees Invalide", 'danger')
+		abort(500)
+	return pointage.id
+
+
 
 def heure_journuit(details):
 	somj = 0
@@ -169,40 +202,19 @@ def fiche_de_paie(user, pointage):
 	total_paye += float(indemnite)
 	return paie, indemnite, total_paye
 
-def test():
-	details = Pointage.query.filter_by(iduser=2).first()
-	if details == None:
-		print("NOne eeee")
-	else:
-		print(details.id)
+def users_total():
+	users = User.query.all()
+	all_users = {}
+	all_total = 0
+	for user in users:
+		pointage = Pointage.query.filter_by(iduser=user.id).first()
+		if pointage != None:
+			_, _, total = fiche_de_paie(user, pointage)
+			all_users[user.matricule] = total
+			all_total += total
+		else:
+			all_users[user.matricule] = 0
+			all_total += 0
 
-def updatedb_pointage(user, feries, jours, nuits):
-	try:
-		pointage = Pointage.query.filter_by(iduser=int(user)).first()
-		for day in Default.DAYS:
-			ferie = int(feries.get(day)) if len(feries.get(day)) > 0 else 0
-			jour = int(jours.get(day)) if len(jours.get(day)) > 0 else 0
-			nuit = int(nuits.get(day)) if len(nuits.get(day)) > 0 else 0
-			if jour > Default.TEMPS_JOUR or nuit > Default.TEMPS_NUIT or ferie > 24:
-				db.session.rollback()
-				flash("Donnees Invalide", 'danger')
-				abort(500)
-			detail = Detailpointage.query.filter_by(idpointage=pointage.id, jour=day).first()
-			print("bbbbbbbbbb={}".format(detail.id))
-
-			detail.jour=day
-			detail.est_ferier=ferie
-			detail.heure_jour=jour
-			detail.heure_nuit=nuit
-			# db.session.commit()
-	except:
-		db.session.rollback()
-		flash("Donnees Invalide", 'danger')
-		abort(500)
-	try:
-		db.session.commit()
-	except:
-		db.session.rollback()
-		flash("Donnees Invalide", 'danger')
-		abort(500)
-	return pointage.id
+	# print(all_users)
+	return all_users, all_total

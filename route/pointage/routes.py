@@ -64,3 +64,9 @@ def fiche_paie(user_id, pointage_id):
     # return render_template('home.html')
     return render_template('fiche_paie.html', title="Fiche de paie", user=user, results=paie,
                                             indemnite=indemnite, total_paye=total_paye)
+
+@pointage.route('/user/stat')
+@login_required
+def stat_user():
+    u, t = services.users_total()
+    return render_template('stat.html', title="Fiche de paie", users=u, total=t)
