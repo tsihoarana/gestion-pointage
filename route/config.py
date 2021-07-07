@@ -5,6 +5,6 @@ class Config:
 
 class Default:
     DAYS = ["LUNDI", "MARDI", "MERCREDI", "JEUDI", "VENDREDI", "SAMEDI", "DIMANCHE"]
-    TAUX_INDEMNITE = 0.3
+    TAUX_INDEMNITE = 0.28
     TEMPS_JOUR = 17
     TEMPS_NUIT = 7

@@ -146,10 +146,10 @@ def fiche_de_paie(user, pointage):
 			th = taux_h  * float(map_conf.get("HM40"))/100
 			arr.append(th)
 		elif key == "Nb heure supp 30%":
-			th = taux_h  * float(map_conf.get("HS30"))/100
+			th = taux_h  * (float(map_conf.get("HS30"))-100)/100
 			arr.append(th)
 		elif key == "Nb heure supp 50%":
-			th = taux_h  * float(map_conf.get("HS50"))/100
+			th = taux_h  * (float(map_conf.get("HS50"))-100)/100
 			arr.append(th)
 		elif key == "Nb heure jour ferie travaille":
 			th = taux_h  * float(map_conf.get("HM50"))/100
