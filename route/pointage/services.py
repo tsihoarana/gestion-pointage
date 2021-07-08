@@ -119,6 +119,7 @@ def heure_total(details):
 
 def heure_supp(user, details):
 	total = heure_total(details)
+	total -= heure_ferie_trav(details)
 	heure_norm = user.cat.heure_hebdo
 	supp_total =  max(0, (total - heure_norm))
 	supp30 = min(8, supp_total)
@@ -198,8 +199,10 @@ def fiche_de_paie(user, pointage):
 	heuret = heure_total(Detailpointage.query.filter_by(idpointage=pointage.id))
 	heuretdiff = heure_hebdo - heuret
 	indemnite = user.cat.indemnite if heuretdiff <= 0 else 0
-	total_paye += float(indemnite)
-	return paie, indemnite, total_paye
+	total_with_impot = (1 - float(map_conf.get("Impot")) / 100) * total_paye
+	total_without_impot = total_paye
+	total_paye = float(indemnite) + total_with_impot
+	return paie, indemnite, total_paye, total_with_impot, total_without_impot
 
 def users_total():
 	users = User.query.all()

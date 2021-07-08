@@ -60,10 +60,10 @@ def calcul_heure(user_id, pointage_id):
 def fiche_paie(user_id, pointage_id):
     user = User.query.get_or_404(user_id)
     pointage = Pointage.query.get_or_404(pointage_id)
-    paie, indemnite, total_paye = services.fiche_de_paie(user, pointage)
+    paie, indemnite, total_paye, total_with_impot, total_without_impot = services.fiche_de_paie(user, pointage)
     # return render_template('home.html')
     return render_template('fiche_paie.html', title="Fiche de paie", user=user, results=paie,
-                                            indemnite=indemnite, total_paye=total_paye)
+                                            indemnite=indemnite, total_paye=total_paye, total_with_impot=total_with_impot,total_without_impot=total_without_impot)
 
 @pointage.route('/user/stat')
 @login_required

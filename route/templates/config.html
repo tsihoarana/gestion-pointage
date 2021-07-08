@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Listes des configs</h1>
+    <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">cle</th>
+          <th scope="col">description</th>
+          <th scope="col">valeur</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for config in configs %}
+        <tr>
+          <td>{{config.id}}</td>
+          <td>{{config.cle}}</td>
+          <td>{{config.description}}</td>
+          <td>{{config.valeur}}</td>
+          {% if current_user.is_authenticated and current_user.type_user == 1 %}
+          <!-- url_for('trajet.update_trajet', portion_id=route.idportionroute) 
+          url_for('users.user_update', iduser=user.id)-->
+          <td><a class="btn btn-outline-success" href="{{url_for('configuration.updateConfig', config_id=config.id)}}">Modifier</a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
