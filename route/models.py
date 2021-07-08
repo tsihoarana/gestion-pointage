@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     type_user = db.Column(db.Integer, nullable=False)
     idcategorie = db.Column(db.Integer, db.ForeignKey('categorie.id'))
     password = db.Column(db.String(100), nullable=False)
-
+    points = db.relationship('Pointage', backref='employe', lazy=True)
     def __repr__(self):
         return f"User('{self.nom}')"
 

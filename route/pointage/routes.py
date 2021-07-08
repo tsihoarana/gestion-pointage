@@ -13,7 +13,7 @@ pointage = Blueprint('pointage', __name__)
 @login_required
 def list_pointage():
     page = request.args.get('page', 1, type=int)
-    points = Pointage.query.paginate(page=page, per_page=5)
+    points = Pointage.query.paginate(page=page, per_page=10)
     return render_template('list_pointage.html', title='Listes pointages', points=points)
 
 

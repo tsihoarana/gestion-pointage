@@ -12,7 +12,7 @@ users = Blueprint('users', __name__)
 @login_required
 def user():
     page = request.args.get('page', 1, type=int)
-    users = User.query.paginate(page=page, per_page=5)
+    users = User.query.paginate(page=page, per_page=10)
     return render_template('user.html', title='Listes user', users=users, utils=utils)
 
 

@@ -6,6 +6,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Iduser</th>
+          <th scope="col">Matricule</th>
         </tr>
         </thead>
         <tbody>
@@ -13,6 +14,7 @@
         <tr>
           <td>{{pointage.id}}</td>
           <td>{{pointage.iduser}}</td>
+          <td>{{pointage.employe.matricule}}</td>
           
           <td><a class="btn btn-outline-info" href="{{url_for('pointage.calcul_heure', user_id=pointage.iduser, pointage_id=pointage.id)}}">Voir details</a></td>
         </tr>
