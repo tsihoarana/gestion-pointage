@@ -211,7 +211,7 @@ def users_total():
 	for user in users:
 		pointage = Pointage.query.filter_by(iduser=user.id).first()
 		if pointage != None:
-			_, _, total = fiche_de_paie(user, pointage)
+			_, _, total, _, _ = fiche_de_paie(user, pointage)
 			all_users[user.matricule] = total
 			all_total += total
 		else:
@@ -242,12 +242,12 @@ def paie_total():
 		if pointage != None:
 			res.append(fiche_de_paie(user, pointage))
 		else:
-			res.append((dummy, 0, 0))
+			res.append((dummy, 0, 0, 0, 0))
 
 	for key in keys:
 		t, m = 0, 0
 		for result in res:
-			paie, indemnite, total_paye = result
+			paie, indemnite, total_paye, _, _ = result
 			t += paie[key][0]
 			m += paie[key][2]
 		ans[key] = [t, m]
